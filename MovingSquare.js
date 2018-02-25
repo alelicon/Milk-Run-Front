@@ -28,12 +28,23 @@ mySquare
 *
 */
 setInterval(function (){
-	console.log("SEND GECT");
     $.get(serverURL, function(data, status){
-		mySquare.transition().attr("x",data.x).delay(1000);
-		mySquare.transition().attr("y",data.y).delay(1000);
+		mySquare.transition().attr("x",data.x).attr("y", snapToRail(data.y)).duration(1000);
+		//mySquare.transition().attr("y",snapToRail(data.y)).duration(1000);
     });
 }, 1000);
+function snapToRail(y) {
+    var offset = 35;
+    var index = Math.floor(y / 105);
+    return offset + index * 140;
+}
+function inBounds(x, y){
+    if(x < 0)
+        return false;
+    if(x > 100)
+        return false;
+    return true;
+}
 
 
 
